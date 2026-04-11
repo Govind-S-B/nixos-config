@@ -47,6 +47,10 @@
     owner = "vio";
   };
 
+  sops.secrets.opencode_key = {
+    owner = "vio";
+  };
+
   services.openssh.enable = true;
   services.tailscale.enable = true;
 

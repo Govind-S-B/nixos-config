@@ -12,11 +12,12 @@
   home.packages = with pkgs; [
     claude-code
     (writeShellScriptBin "ccfree" ''
-      export ANTHROPIC_AUTH_TOKEN=$(cat /run/secrets/openrouter_key)
+      export ANTHROPIC_AUTH_TOKEN=$(cat /run/secrets/opencode_key)
       export ANTHROPIC_API_KEY=""
-      export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
+      export ANTHROPIC_BASE_URL="https://opencode.ai/zen"
+      export ANTHROPIC_MODEL="minimax-m2.5-free"
       export CLAUDE_CODE_DISABLE_AUTOUPDATE=1
-      exec claude --model openrouter/free --dangerously-skip-permissions "$@"
+      exec claude --dangerously-skip-permissions "$@"
     '')
   ];
 
