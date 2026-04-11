@@ -46,6 +46,10 @@
   };
 
   services.openssh.enable = true;
+  services.openssh.settings = {
+    Banner = "/etc/banner.txt";
+  };
+  environment.etc."banner.txt".text = lib.readFile ./banner.txt;
   services.tailscale.enable = true;
 
   system.stateVersion = "25.11";
