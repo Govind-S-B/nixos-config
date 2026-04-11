@@ -43,7 +43,7 @@
   sops.age.keyFile = "/home/vio/.config/sops/age/keys.txt";
   sops.age.generateKey = false;
 
-  sops.secrets.anthropic_auth_token = {
+  sops.secrets.openrouter_key = {
     owner = "vio";
   };
 
