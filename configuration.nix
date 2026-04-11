@@ -28,6 +28,7 @@
     kitty.terminfo
     sops
     age
+    fastfetch
   ];
 
   # --- sops-nix secrets ---

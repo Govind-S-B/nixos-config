@@ -37,4 +37,36 @@
     baseIndex = 1;
     terminal = "screen-256color";
   };
+
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      logo = {
+        type = "chafa";
+        source = "${config.home.homeDirectory}/nixos-config/fastfetch_logo.png";
+        width = 50;
+        height = 20;
+        position = "left";
+      };
+      modules = [
+        "title"
+        "separator"
+        "os"
+        "host"
+        "kernel"
+        "uptime"
+        "packages"
+        "shell"
+        "resolution"
+        "de"
+        "wm"
+        "theme"
+        "cpu"
+        "memory"
+        "gpu"
+        "break"
+        "colors"
+      ];
+    };
+  };
 }
