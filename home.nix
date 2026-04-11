@@ -10,6 +10,7 @@
   # Wrapper scripts that inject secrets only into the launched process
   # Secrets are read from /run/secrets/ (decrypted by sops-nix at activation)
   home.packages = with pkgs; [
+    gh
     claude-code
     (writeShellScriptBin "ccfree" ''
       export ANTHROPIC_AUTH_TOKEN=$(cat /run/secrets/opencode_key)
