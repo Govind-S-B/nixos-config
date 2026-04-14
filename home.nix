@@ -4,7 +4,7 @@
   home.stateVersion = "25.11";
 
   home.shellAliases = {
-    rebuild = "cd ~/nixos-config && git add . && sudo nixos-rebuild switch --flake .#nixchan";
+    rebuild = "cd ~/nixos-config && sudo nixos-rebuild switch --flake .#nixchan";
   };
 
   # Wrapper scripts that inject secrets only into the launched process
@@ -23,6 +23,11 @@
   ];
 
   programs.bash.enable = true;
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 
   programs.git = {
     enable = true;
