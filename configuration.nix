@@ -91,5 +91,18 @@
   environment.etc."banner.txt".text = lib.readFile ./banner.txt;
   services.tailscale.enable = true;
 
+  # --- cockpit web UI (http://nixchan:9090 over tailscale) ---
+  # tailscale0 is already a trusted iface, so no openFirewall needed.
+  # AllowUnencrypted because we serve plain HTTP inside the tailnet.
+  # Origins whitelists the hostname the browser will send.
+  services.cockpit = {
+    enable = true;
+    openFirewall = false;
+    settings.WebService = {
+      AllowUnencrypted = true;
+      Origins = lib.mkForce "http://nixchan:9090 https://nixchan:9090";
+    };
+  };
+
   system.stateVersion = "25.11";
 }
