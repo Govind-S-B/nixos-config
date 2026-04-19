@@ -46,6 +46,10 @@
     owner = "vio";
   };
 
+  sops.secrets.telegram_hermes_bot_key = {
+    owner = "vio";
+  };
+
   # --- hermes-agent ---
   # Everything hermes-related lives inside ~/HERMES/ (stateDir). The module
   # puts the actual brain at ~/HERMES/.hermes/, workspace at ~/HERMES/workspace/,
@@ -56,6 +60,7 @@
   sops.templates."hermes_env" = {
     content = ''
       OPENCODE_ZEN_API_KEY=${config.sops.placeholder.opencode_key}
+      TELEGRAM_BOT_TOKEN=${config.sops.placeholder.telegram_hermes_bot_key}
     '';
     owner = "vio";
     restartUnits = [ "hermes-agent.service" ];
