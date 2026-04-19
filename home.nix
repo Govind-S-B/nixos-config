@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hermesPkg, ... }:
 
 {
   home.stateVersion = "25.11";
@@ -20,7 +20,13 @@
       export CLAUDE_CODE_DISABLE_AUTOUPDATE=1
       exec claude --dangerously-skip-permissions "$@"
     '')
+    (writeShellScriptBin "hermes" ''
+      export OPENCODE_ZEN_API_KEY=$(cat /run/secrets/opencode_key)
+      export HERMES_HOME=${config.home.homeDirectory}/HERMES/.hermes
+      exec ${hermesPkg}/bin/hermes "$@"
+    '')
   ];
+
 
   programs.bash.enable = true;
 

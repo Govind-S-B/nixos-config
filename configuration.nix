@@ -46,6 +46,39 @@
     owner = "vio";
   };
 
+  # --- hermes-agent ---
+  # Everything hermes-related lives inside ~/HERMES/ (stateDir). The module
+  # puts the actual brain at ~/HERMES/.hermes/, workspace at ~/HERMES/workspace/,
+  # etc. Nothing leaks outside ~/HERMES/.
+
+  # Render a systemd-format env file from the raw opencode_key secret.
+  # Lives on tmpfs at /run/secrets-rendered/; auto-restart on content change.
+  sops.templates."hermes_env" = {
+    content = ''
+      OPENCODE_ZEN_API_KEY=${config.sops.placeholder.opencode_key}
+    '';
+    owner = "vio";
+    restartUnits = [ "hermes-agent.service" ];
+  };
+
+  services.hermes-agent = {
+    enable = true;
+    user = "vio";
+    group = "users";
+    stateDir = "/home/vio/HERMES";
+    createUser = false;
+    settings.model = {
+      provider = "opencode-zen";
+      default = "minimax-m2.5-free";
+    };
+    # environmentFiles intentionally unset -> module writes no .env to disk
+  };
+
+  # Inject the API key via systemd EnvironmentFile instead of the module's
+  # on-disk .env merge. Keeps the secret on tmpfs only.
+  systemd.services.hermes-agent.serviceConfig.EnvironmentFile =
+    config.sops.templates."hermes_env".path;
+
   services.openssh.enable = true;
   services.openssh.settings = {
     Banner = "/etc/banner.txt";
